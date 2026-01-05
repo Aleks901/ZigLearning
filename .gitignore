@@ -1,0 +1,10 @@
+.zig-cache/
+zig-out/
+.cache/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
