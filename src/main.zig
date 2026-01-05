@@ -1,27 +1,34 @@
 const std = @import("std");
 const ZigLearning = @import("ZigLearning");
 
+
+
 pub fn main() !void {
-    // Prints to stderr, ignoring potential errors.
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-    try ZigLearning.bufferedPrint();
-}
-
-test "simple test" {
-    const gpa = std.testing.allocator;
-    var list: std.ArrayList(i32) = .empty;
-    defer list.deinit(gpa); // Try commenting this out and see if zig detects the memory leak!
-    try list.append(gpa, 42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
-}
-
-test "fuzz example" {
-    const Context = struct {
-        fn testOne(context: @This(), input: []const u8) anyerror!void {
-            _ = context;
-            // Try passing `--fuzz` to `zig build test` and see if it manages to fail this test case!
-            try std.testing.expect(!std.mem.eql(u8, "canyoufindme", input));
-        }
+    
+    const testPlayer = ZigLearning.Entity.Player 
+    {
+        .id = 1,
+        .health = 10,
+        .mana = 10,
+        .name = "Aleks"
     };
-    try std.testing.fuzz(Context{}, Context.testOne, .{});
+
+    var testEnemy = ZigLearning.Entity.Enemy
+    {
+        .id = 1,
+        .health = 10,
+        .mana = 10,
+        .name = "Enemy Entity"
+    };
+
+    std.debug.print(
+        "Player name: {s}, Health: {}\n",
+        .{testPlayer.name, testPlayer.health} 
+    );
+
+    try ZigLearning.Entity.attackTarget(&testEnemy);
+
+    std.debug.print("Enemy health: {}", .{testEnemy.health});
 }
+
